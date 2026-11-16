@@ -6,11 +6,19 @@
 
 **Mohamed Zaghoo** · Applied physics → AI post-training → MENA financial infrastructure
 
-[Benchmark results](#benchmark-results) · [Why this matters](#why-high-quality-data-matters-in-mena) · [Run the demo](#run-the-public-demo) · [Technical methods](docs/METHODS.md)
+[Verifier experiment](#main-result-measured-and-reduced-trap-errors) · [Historical model scores](#benchmark-results) · [Why this matters](#why-high-quality-data-matters-in-mena) · [Run the demo](#run-the-public-demo) · [Technical methods](docs/METHODS.md)
 
 | Original exploratory study | Public, runnable release | Current research stage |
 |---|---|---|
 | 6 Arabic legal tasks · 109 weighted criteria | 1 synthetic task · 67 frozen matched sentences | Trap checks validated on held-out sentences; no RL training |
+
+## Main result: measured and reduced trap errors
+
+On **30 held-out Arabic sentences**, false penalties fell from **7/17 to 0/17**, while missed violations fell from **3/13 to 1/13** after adding clause-scoped negation handling. The experiment contains 67 sentences: 37 development items and 30 held-out items. The reported procedure froze the dataset before changes and scored the held-out split once after the fix was frozen.
+
+![Trap checker errors before and after](experiments/verifier_validation/trap_errors.svg)
+
+The labels were written by an AI assistant, not independent legal reviewers, and the sample is small: 0/17 has a 95% upper bound of about 16%. [Method, per-phenomenon errors and limitations](experiments/verifier_validation/README.md).
 
 ## Why high-quality data matters in MENA
 
@@ -47,13 +55,9 @@ Astra used Codex at high reasoning; Claude used the project's provider adapter. 
 
 The numbers are retained as observations about an experimental evaluator. No aggregate winner is reported. [Machine-readable summary](docs/benchmark_summary.json) · [Research note](docs/RESEARCH_NOTE.md)
 
-## Main result: measured and reduced trap errors
+### Supporting observations: private-corpus rerun
 
-On 67 matched Arabic sentences, frozen before any change and split into dev and held-out halves, the original trap checker wrongly penalised **46% of compliant sentences** and missed **33% of violations**. Making negation clause-scoped brought the held-out split to **0/17 false penalties and 1/13 misses**. The held-out half was scored once, after the fix was frozen.
-
-![Trap checker errors before and after](experiments/verifier_validation/trap_errors.svg)
-
-On the private six-task corpus, the fix changed exactly three gate decisions, all known false positives. It let no reference, negative control or real violation through:
+The reported rerun of the private six-task corpus changed three gate decisions previously identified as false positives. No other recorded decisions changed. These results are supporting observations: the source corpus and full model outputs are withheld, so this rerun cannot be independently reproduced from the public release.
 
 | GPT-6 Astra answer | Raw reward, historical checker | After the fix |
 |---|---:|---:|
@@ -61,9 +65,7 @@ On the private six-task corpus, the fix changed exactly three gate decisions, al
 | Probation termination memo | 0.44 | 1.00 |
 | Mutual NDA drafting | 0.29 | 0.66 |
 
-The probation comparison reverses. Astra's memo is correct on the 1446H amendment (Royal Decree M/44), while Claude Opus 5.5's memo still triggers the trap (0.38) because it states the repealed 90-day rule as current law. The old checker had turned a correct answer into an apparent model failure.
-
-The labels were written by an AI assistant, not independent legal reviewers, and the sample is small: 0/17 has a 95% upper bound of about 16%. [Method, per-phenomenon errors and limitations](experiments/verifier_validation/README.md).
+The probation rubric scores reverse after the fix: Astra receives 1.00 while Claude remains at 0.38. **A score of 1.00 means full credit under this rubric, not that the memo is legally correct in every respect.** This illustrates the sensitivity of model scores to grader errors; it does not establish overall model superiority or independent legal validation.
 
 ## Why it mattered: scoring errors can look like model failures
 
