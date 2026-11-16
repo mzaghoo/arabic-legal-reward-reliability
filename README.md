@@ -1,10 +1,10 @@
 # Arabic Legal Reward Reliability
 
-### Better evidence and better rewards for AI in MENA legal and financial workflows
+### Better evidence and better rewards for Arabic legal AI in MENA
 
 **A model can produce a convincing answer and still be wrong. An evaluator can also penalize an answer that is right.** This project investigates both sides of that problem through Arabic legal drafting: how to build tasks, evidence, and scoring rules that deserve to be used for evaluation—and eventually for training.
 
-**Mohamed Zaghoo** · Applied physics → AI post-training → MENA financial infrastructure
+**Mohamed Zaghoo** · Applied physics → AI post-training → Arabic legal evaluation
 
 [Verifier experiment](#main-result-measured-and-reduced-trap-errors) · [Historical model scores](#benchmark-results) · [Why this matters](#why-high-quality-data-matters-in-mena) · [Run the demo](#run-the-public-demo) · [Technical methods](docs/METHODS.md)
 
@@ -22,19 +22,19 @@ The labels were written by an AI assistant, not independent legal reviewers, and
 
 ## Why high-quality data matters in MENA
 
-An Arabic contract or financial instruction carries more than language. Its meaning depends on the jurisdiction, relevant date, source documents, parties, and the action being requested. MENA is not a single legal system, and this Saudi-focused study does not establish coverage across the region or its languages.
+An Arabic contract, legal memo, or demand letter carries more than language. Its meaning depends on the jurisdiction, relevant date, source documents, parties, and the action being requested. MENA is not a single legal system, and this Saudi-focused study does not establish coverage across the region or its languages.
 
 The research thesis is straightforward: **useful domain data must tell a model what to do, give it the evidence needed to do it, and let an evaluator distinguish success from a plausible mistake.** More examples alone cannot resolve an unstated requirement or an unreliable answer key.
 
-| What quality requires | In legal tasks | In proposed finance tasks |
-|---|---|---|
-| Explicit context | Jurisdiction, applicable date, contract terms | Currency, accounting period, transaction state |
-| Traceable evidence | Source document and relevant provision | Invoice, ledger entry and settlement record |
-| Precise success conditions | Preserve rights and obey drafting constraints | Reconcile balances and avoid duplicate financial effects |
-| Meaning-sensitive grading | Distinguish a prohibition from its negation | Distinguish a requested refund from a completed refund |
-| Independent validation | Qualified review of legal reasoning | Reconciled records and reviewed financial invariants |
+| What quality requires | In legal tasks |
+|---|---|
+| Explicit context | Jurisdiction, applicable date, contract terms, and the client's instructions |
+| Traceable evidence | Source document, relevant provision, and citation verification status |
+| Precise success conditions | Preserve rights, identify material issues, and obey drafting constraints |
+| Meaning-sensitive grading | Distinguish a prohibition from its negation and contractual terms from statutory rules |
+| Independent validation | Qualified review of legal reasoning and criterion-level labels |
 
-The legal column motivates the present pilot; the finance column is a proposed extension, not a completed benchmark. In both, a training reward is only as useful as the evidence and verifier behind it. Whether better task data improves trained-model behavior remains a question for a future controlled experiment.
+The present pilot focuses on Arabic legal drafting and review. Its immediate priority is to validate whether the evaluator distinguishes substantive legal errors from correct variations in wording. A training reward is only as useful as the evidence and verifier behind it; whether better legal task data improves trained-model behavior remains a question for a future controlled experiment.
 
 Arabic evaluation already has substantive foundations: [ArabicMMLU](https://aclanthology.org/2024.findings-acl.334/) draws on regional educational material, while [ArabLegalEval](https://aclanthology.org/2024.arabicnlp-1.20/) evaluates Arabic legal knowledge. This smaller project examines a specific issue within that broader effort: **the reliability of rewards for open-ended professional drafting.**
 
@@ -125,7 +125,7 @@ The original six task packages, source-derived references, raw model outputs, an
 - **Fix the hidden NDA requirement:** version the prompt with explicit jurisdiction and regenerate, rather than re-scoring old answers against a requirement they were never given.
 - **Separate development from evaluation:** freeze prompts and rubrics before testing held-out task variants; record changes and keep historical results intact.
 - **Improve model comparisons:** match prompts and tool access, collect multiple samples, and report uncertainty alongside independent human assessment.
-- **Extend to financial workflows:** build synthetic reconciliation and refund tasks whose outcomes can be checked against ledgers and state transitions. Test adversarial shortcuts before using their rewards for optimization.
+- **Publish a complete legal case:** independently author a realistic Saudi legal task with dated official sources, an explicit rubric, and positive and negative controls that can be reviewed and reproduced publicly.
 
 The aim is to develop **domain evaluation data with explicit assumptions, auditable evidence, and measured verifier reliability**. Those are prerequisites for investigating whether the same tasks can provide useful training signals.
 
