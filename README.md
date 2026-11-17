@@ -6,11 +6,11 @@
 
 **Mohamed Zaghoo** · Applied physics → AI post-training → Arabic legal evaluation
 
-[Verifier experiment](#main-result-measured-and-reduced-trap-errors) · [Historical model scores](#benchmark-results) · [Why this matters](#why-high-quality-data-matters-in-mena) · [Run the demo](#run-the-public-demo) · [Technical methods](docs/METHODS.md)
+[Verifier experiment](#main-result-measured-and-reduced-trap-errors) · [Expert rubric review](#second-result-an-expert-review-makes-the-rubric-stricter-and-raises-the-bar-for-the-checks) · [Historical model scores](#benchmark-results) · [Why this matters](#why-high-quality-data-matters-in-mena) · [Run the demo](#run-the-public-demo) · [Technical methods](docs/METHODS.md)
 
 | Original exploratory study | Public, runnable release | Current research stage |
 |---|---|---|
-| 6 Arabic legal tasks · 109 weighted criteria | 1 synthetic task · 67 frozen matched sentences | Trap checks validated on held-out sentences; no RL training |
+| 6 Arabic legal tasks · 109 weighted criteria | 1 synthetic task · 67 frozen matched sentences | Trap checks validated on held-out sentences; expert rubric review of 2 tasks; no expert answer grading or RL training yet |
 
 ## Main result: measured and reduced trap errors
 
@@ -19,6 +19,34 @@ On **30 held-out Arabic sentences**, false penalties fell from **7/17 to 0/17**,
 ![Trap checker errors before and after](experiments/verifier_validation/trap_errors.svg)
 
 The labels were written by an AI assistant, not independent legal reviewers, and the sample is small: 0/17 has a 95% upper bound of about 16%. [Method, per-phenomenon errors and limitations](experiments/verifier_validation/README.md).
+
+## Second result: an expert review makes the rubric stricter, and raises the bar for the checks
+
+One external expert, a licensed lawyer with five years in commercial and corporate practice, advising startups, corporates and public-sector entities, reviewed the full rubrics for two private-corpus tasks, the mutual NDA (26 criteria) and the probation memo (15 criteria):
+- They kept every criterion.
+- They changed the weights on eight.
+- They added eight whole-answer penalties for missing core content, such as compelled-disclosure mechanics, or no compensation during probation.
+
+The same saved answers were then rescored. Nothing was regenerated.
+
+| Answer | NDA before → expert | Probation before → expert |
+|---|---:|---:|
+| Reference | 0.87 → 0.87 | 0.91 → 0.92 |
+| Claude Opus 5.5 | 0.76 → 0.62 | 0.38 → 0.30 |
+| GPT-6 Astra | 0.66 → 0.42 | 1.00 → 1.00 |
+| Copy of the prompt | 0.16 → **0.07** | 0.36 → **0.14** |
+
+What this shows:
+
+- **The answer key got stricter in the right direction.** Copying the probation prompt used to earn nearly as much as a real memo. Under the expert rubric it earns 0.14, while the references are unchanged. The model order on both tasks is the same.
+- **The new penalties make every pattern miss expensive.** Two failures traced to the pattern, not the answer:
+  - Astra left the NDA durations open as «[مدة الاتفاقية]», but the check only recognises a time unit inside brackets, so it gave half credit and cut the whole answer by 20%.
+  - Claude cited Art. 88 only as «(88)» in a table, which the expert's method would credit but the pattern doesn't.
+
+  Under the old weights a miss cost 1–2 points. Now it costs 10–30% of the reward.
+- **The hidden NDA requirement got more expensive too.** Neither model named Saudi forums, because the prompt never says the parties are Saudi. The expert's new forum penalty cuts both for it.
+
+So expert input and verifier validation are complementary. The expert decides *what* matters and how much. Matched-sentence tests then have to show the code *detects* it reliably, because the expert's design makes detection errors cost more. The expert has not yet scored the answers themselves, so the agreement between the reward and an expert is not measured. [Changes, per-answer analysis and limitations](experiments/expert_rubric_review/README.md).
 
 ## Why high-quality data matters in MENA
 
@@ -121,7 +149,9 @@ The original six task packages, source-derived references, raw model outputs, an
 
 ## Next experiments
 
-- **Finish validating the verifier:** the trap checks now have a frozen matched-pair test (above). Next: have a qualified Saudi lawyer review its labels and write a new held-out set from a different author, then extend the same test to positive criteria, which still miss Arabic paraphrases.
+- **Measure agreement with the expert:** have the expert score the saved answers blind to their source, then report how often each rubric version (historical, corrected, expert) ranks them the same way. Add a second expert to estimate how far experts agree with each other.
+- **Validate the newly penalised criteria:** the eight criteria the expert turned into whole-answer penalties are pattern-matched and untested. Give each one a frozen matched-sentence test, like the traps, before using the expert rubric as a reward.
+- **Finish validating the traps:** have a qualified Saudi lawyer review the 67 sentence labels and write a new held-out set from a different author.
 - **Fix the hidden NDA requirement:** version the prompt with explicit jurisdiction and regenerate, rather than re-scoring old answers against a requirement they were never given.
 - **Separate development from evaluation:** freeze prompts and rubrics before testing held-out task variants; record changes and keep historical results intact.
 - **Improve model comparisons:** match prompts and tool access, collect multiple samples, and report uncertainty alongside independent human assessment.

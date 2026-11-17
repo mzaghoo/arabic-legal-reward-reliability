@@ -30,4 +30,4 @@ The synthetic task has no judge criteria. Running it with `--judge` does not con
 4. Use matched model harnesses and multiple samples. Estimate uncertainty at the task level; correlated rubric items are not independent task samples.
 5. Before RL training, measure whether optimizing the reward encourages shortcuts. Evaluate on held-out tasks and independently verified outcomes.
 
-This is a proposed protocol. No independent legal adjudication, held-out validation study, financial-task benchmark or RL training result is claimed here.
+This is a proposed protocol. Two parts have started: a held-out validation of the trap checks (`experiments/verifier_validation`) and one expert's review of two rubrics (`experiments/expert_rubric_review`). No independent legal adjudication of answers, financial-task benchmark or RL training result is claimed here.
