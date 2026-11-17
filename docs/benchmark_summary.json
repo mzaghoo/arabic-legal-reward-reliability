@@ -39,7 +39,9 @@
       "claude_raw_reward": 0.3788,
       "interpretation_note": "Astra contractual example falsely triggers a penalty",
       "astra_raw_reward_after_trap_fix_v2": 1.0,
-      "claude_raw_reward_after_trap_fix_v2": 0.3788
+      "claude_raw_reward_after_trap_fix_v2": 0.3788,
+      "astra_raw_reward_expert_rubric": 1.0,
+      "claude_raw_reward_expert_rubric": 0.295
     },
     {
       "task_id": "mutual_nda_drafting",
@@ -47,8 +49,11 @@
       "claude_raw_reward": 0.7636,
       "interpretation_note": "False IP-transfer penalty; jurisdiction missing from prompt",
       "astra_raw_reward_after_trap_fix_v2": 0.6621,
-      "claude_raw_reward_after_trap_fix_v2": 0.7636
+      "claude_raw_reward_after_trap_fix_v2": 0.7636,
+      "astra_raw_reward_expert_rubric": 0.424,
+      "claude_raw_reward_expert_rubric": 0.618
     }
   ],
-  "trap_fix_v2": "2026-11-16 rerun of the same saved answers with the clause-scoped negation checker; see experiments/verifier_validation. Historical raw values unchanged."
+  "trap_fix_v2": "2026-11-16 rerun of the same saved answers with the clause-scoped negation checker; see experiments/verifier_validation. Historical raw values unchanged.",
+  "expert_rubric_review": "2026-11-17 rescoring of the same saved answers under one external expert's revised weights and whole-answer penalties (NDA, probation only), with the v2 trap checker; see experiments/expert_rubric_review. Expert did not score answers."
 }

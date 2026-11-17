@@ -31,6 +31,12 @@ Re-scoring the private corpus with the fixed checker changed three raw rewards, 
 
 Caveats: an AI assistant wrote and labelled all the sentences, both splits come from that one author, and the held-out sample is small. These results establish that the checker change generalises within this set, not that it is legally validated.
 
+## Follow-up: expert rubric review (2026-11-17)
+
+One external expert (a licensed lawyer with five years in commercial and corporate practice, advising startups, corporates and public-sector entities) reviewed the NDA and probation rubrics ([`experiments/expert_rubric_review`](../experiments/expert_rubric_review/README.md)). They kept all 41 criteria, changed eight weights and added eight whole-answer penalties. On the same saved answers, the reward for a copy of the prompt fell from 0.158 to 0.065 (NDA) and from 0.364 to 0.141 (probation), while the references stayed at 0.87 and 0.91 → 0.92. Model order was unchanged: Claude 0.764 → 0.618 and Astra 0.662 → 0.424 on the NDA; Claude 0.379 → 0.295 and Astra 1.0 → 1.0 on probation.
+
+Two penalised failures trace to patterns rather than answers: a bracketed duration placeholder without a unit word (Astra NDA), and Art. 88 cited as a bare table number (Claude probation). The forum penalty also compounds the hidden jurisdiction requirement. The expert did not score answers, so reward–expert agreement is still unmeasured.
+
 ## What the evidence does and does not support
 
 The tests exercise normalization, reference/control separation and selected traps. Eleven tests passed in the original local environment before release preparation; those private-corpus tests are not included here. This is implementation evidence, not a precision/recall estimate or independent legal validation.

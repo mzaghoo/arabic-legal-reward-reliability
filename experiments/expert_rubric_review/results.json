@@ -1,0 +1,49 @@
+{
+  "date": "2026-11-17",
+  "status": "one external expert's rubric review for two private-corpus tasks; supporting observation, not independently reproducible from this repository",
+  "reviewer": "a licensed lawyer with five years in commercial and corporate practice, advising startups, corporates and public-sector entities, consulted by the author (qualifications as reported, not independently verified); reviewed rubric criteria, weights and whole-answer penalties; did not score candidate answers",
+  "scoring": "same saved answers, same corrected (v2) trap checker, judge items reused from cache; no new generation or judge calls",
+  "gate_semantics": "a whole-answer penalty applies whenever the criterion scores below full credit, including partial credit; penalties compound",
+  "tasks": {
+    "mutual_nda_drafting": {
+      "criteria": 26,
+      "total_weight_before": 55,
+      "total_weight_expert": 55,
+      "changes": [
+        {"criterion": "Confidential-information definition", "weight": [2, 2], "penalty": [null, 0.8]},
+        {"criterion": "Representatives: need-to-know and recipient liability", "weight": [2, 3], "penalty": [null, 0.8]},
+        {"criterion": "Compelled-disclosure mechanics", "weight": [2, 3], "penalty": [null, 0.9]},
+        {"criterion": "Return/destruction: written confirmation and deletion", "weight": [2, 2], "penalty": [null, null], "note": "scoring split changed to half confirmation, half deletion provisions"},
+        {"criterion": "Durations and forum left in brackets", "weight": [3, 2], "penalty": [null, 0.8]},
+        {"criterion": "Saudi forum options (commercial courts and Saudi arbitration)", "weight": [3, 3], "penalty": [null, 0.8]},
+        {"criterion": "Judge: question quality", "weight": [3, 2], "penalty": [null, null]}
+      ],
+      "rewards": {
+        "reference":                {"before": 0.873, "expert": 0.873},
+        "claude-opus-5-5":          {"before": 0.764, "expert": 0.618, "expert_failed_penalties": ["Saudi forum options"]},
+        "gpt-6-astra":              {"before": 0.662, "expert": 0.424, "expert_failed_penalties": ["Durations and forum left in brackets", "Saudi forum options"], "expert_if_bracket_pattern_recognised": 0.544},
+        "prompt_copy":              {"before": 0.158, "expert": 0.065},
+        "negative_control":         {"before": 0.013, "expert": 0.005}
+      }
+    },
+    "probation_termination_memo": {
+      "criteria": 15,
+      "total_weight_before": 33,
+      "total_weight_expert": 38,
+      "total_note": "the expert's table total row reads 33; its individual weights sum to 38 and were used",
+      "changes": [
+        {"criterion": "Either party may terminate during probation", "weight": [3, 3], "penalty": [null, 0.8]},
+        {"criterion": "No termination compensation or end-of-service award", "weight": [2, 4], "penalty": [null, 0.7]},
+        {"criterion": "Repeat probation (Art. 54)", "weight": [1, 2], "penalty": [null, null]},
+        {"criterion": "Seven-day settlement of dues (Art. 88)", "weight": [1, 3], "penalty": [null, 0.8]}
+      ],
+      "rewards": {
+        "reference":                {"before": 0.909, "expert": 0.921},
+        "claude-opus-5-5":          {"before": 0.379, "expert": 0.295, "expert_failed_penalties": ["Outdated 90-day rule (trap)", "Seven-day settlement of dues"]},
+        "gpt-6-astra":              {"before": 1.0,   "expert": 1.0},
+        "prompt_copy":              {"before": 0.364, "expert": 0.141},
+        "negative_control":         {"before": 0.121, "expert": 0.047}
+      }
+    }
+  }
+}
