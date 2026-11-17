@@ -7,7 +7,7 @@ The expert did **not** score any candidate answers. This is a review of the answ
 ## What the expert changed
 
 - **Kept all 41 criteria.** No criterion was removed as legally wrong, and none was added.
-- **Changed weights on eight criteria** and **added eight whole-answer penalties**:
+- **Changed weights on seven criteria** and **added eight whole-answer penalties**:
   - NDA: five penalties (×0.8–0.9) on the definition, representatives, compelled disclosure, bracketed terms and Saudi forum options.
   - Probation: three penalties (×0.7–0.8) on mutual termination, no compensation or end-of-service award, and the seven-day settlement of dues.
 - **Rebalanced emphasis on probation:** compensation (2 → 4), settlement of dues (1 → 3) and repeat probation (1 → 2).
