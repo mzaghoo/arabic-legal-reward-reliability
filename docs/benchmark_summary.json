@@ -54,6 +54,6 @@
       "claude_raw_reward_expert_rubric": 0.618
     }
   ],
-  "trap_fix_v2": "2026-11-16 rerun of the same saved answers with the clause-scoped negation checker; see experiments/verifier_validation. Historical raw values unchanged.",
+  "trap_fix_v2": "2026-11-16 rerun of the same saved answers with the combined revision of checker logic and trap definitions; see experiments/verifier_validation. Historical raw values unchanged.",
   "expert_rubric_review": "2026-11-17 rescoring of the same saved answers under one external expert's revised weights and whole-answer penalties (NDA, probation only), with the v2 trap checker; see experiments/expert_rubric_review. Expert did not score answers."
 }

@@ -3,7 +3,7 @@
 <text x="24" y="34" font-size="17" font-weight="600" fill="#0b0b0b">Trap checker errors on 67 matched Arabic sentences</text>
 <text x="24" y="56" font-size="13" fill="#52514e">Lower is better. Held-out split measured once, after the fix was frozen.</text>
 <rect x="24" y="72" width="12" height="12" rx="2" fill="#eb6834"/><text x="42" y="82" font-size="12.5" fill="#52514e">v1: keyword window</text>
-<rect x="224" y="72" width="12" height="12" rx="2" fill="#2a78d6"/><text x="242" y="82" font-size="12.5" fill="#52514e">v2: clause-scoped negation</text>
+<rect x="224" y="72" width="12" height="12" rx="2" fill="#2a78d6"/><text x="242" y="82" font-size="12.5" fill="#52514e">v2: combined revision</text>
 <text x="24" y="110" font-size="13.5" font-weight="600" fill="#0b0b0b">Compliant text wrongly penalised</text>
 <line x1="24" x2="364" y1="320.0" y2="320.0" stroke="#e1e0d9" stroke-width="1"/><text x="364" y="316.0" font-size="11" fill="#898781" text-anchor="end">0%</text>
 <line x1="24" x2="364" y1="235.83333333333331" y2="235.83333333333331" stroke="#e1e0d9" stroke-width="1"/><text x="364" y="231.83333333333331" font-size="11" fill="#898781" text-anchor="end">25%</text>

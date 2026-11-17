@@ -28,7 +28,7 @@ The same saved answers were rescored with the corrected trap checker. Judge scor
 | Copy of the prompt | 0.16 | **0.07** | 0.36 | **0.14** |
 | Deliberately flawed answer | 0.01 | 0.005 | 0.12 | 0.05 |
 
-**1. Weak answers are separated much more clearly.** On probation, copying the prompt used to earn 0.36, almost as much as Claude's real memo. Under the expert rubric it earns 0.14, because a copy can't contain the compensation, mutual-termination or settlement content the expert now requires. The references score the same or slightly higher.
+**1. Rewards fell for prompt-copy and deliberately flawed controls.** The probation prompt-copy reward fell from 0.36 to 0.14, and the deliberately flawed control fell from 0.12 to 0.05. NDA control rewards also fell, while reference scores remained similar. These observations do not by themselves establish better legal grading.
 
 **2. The model order doesn't change.** Astra is still at 1.00 on probation, while Claude is still sunk by the outdated-law trap. On the NDA, both models fall, Astra more.
 
@@ -45,7 +45,7 @@ Neither pattern was changed after seeing these results; both are recorded here a
 
 ## Interpretation
 
-An expert review made the rubric **stricter in the right direction**: it lowers scores that should be low, such as a copy of the prompt, and leaves the references intact. It also **raised the reliability bar for the checks.** Every newly penalised criterion is a pattern-matched positive check, and none has had the matched-sentence test the traps received. Before these rubrics are used as a training reward, each of the eight penalised criteria needs that test, because a single regex miss now costs 10–30% of the answer's reward instead of 1–2 points.
+The expert rubric revisions **lowered rewards for prompt-copy and deliberately flawed controls**, while reference scores remained similar. Lower scores alone do not establish better legal grading; agreement with independent expert answer judgments has not yet been measured. The revisions also **raised the reliability bar for the checks.** Every newly penalised criterion is a pattern-matched positive check, and none has had the matched-sentence test the traps received. Before these rubrics are used as a training reward, each of the eight penalised criteria needs that test, because a single regex miss now costs 10–30% of the answer's reward instead of 1–2 points.
 
 ## Limitations
 

@@ -1,6 +1,6 @@
 # Verifier validation: do the trap checks punish correct answers?
 
-Trap checks are the most consequential part of the reward. A failed trap is a gate: it removes the criterion's credit *and* multiplies the whole answer's reward by 0.5–0.7. The historical study found three cases where a trap fired on a statement that *rejected* the prohibited action. This experiment measures how often that happens, and whether a principled fix generalises to examples it wasn't tuned on.
+Trap checks are the most consequential part of the reward. A failed trap is a gate: it removes the criterion's credit *and* multiplies the whole answer's reward by 0.5–0.7. The historical study found three cases where a trap fired on a statement that *rejected* the prohibited action. This experiment measures how often that happens, and whether a combined revision of checker logic and trap definitions improves performance on held-out examples.
 
 ![Trap checker errors before and after](trap_errors.svg)
 
@@ -9,7 +9,7 @@ Trap checks are the most consequential part of the reward. A failed trap is a ga
 | Split | Checker | Compliant text wrongly penalised | Violations missed | Accuracy |
 |---|---|---|---|---|
 | Dev | v1 (keyword window) | 10/20 (50%) | 7/17 (41%) | 0.54 |
-| Dev | v2 (clause-scoped negation) | 0/20 | 0/17 | 1.00 *(tuned on these)* |
+| Dev | v2 (combined revision) | 0/20 | 0/17 | 1.00 *(tuned on these)* |
 | **Held-out** | v1 | 7/17 (41%) | 3/13 (23%) | 0.67 |
 | **Held-out** | **v2** | **0/17** | **1/13 (8%)** | **0.97** |
 
@@ -25,12 +25,12 @@ The original checker penalised 46% of all compliant sentences and missed 33% of 
 
    The near-misses are what stop "accept anything containing a negation word" from looking like a fix.
 2. **Frozen and split.** The SHA-256 of the set was recorded before the checker changed (`FROZEN_SHA256` in `measure.py`, verified on every run). It was split by trap × label with seed 20261116 into 37 dev and 30 held-out items.
-3. **Fix, designed on dev errors only.** `clause_negation` in `legal_rlvr/checks.py` excuses a trap hit only when a negator governs it inside its own clause:
+3. **Combined revision, designed on dev errors only.** `clause_negation` in `legal_rlvr/checks.py` excuses a trap hit only when a negator governs it inside its own clause:
    - before the hit («ولا تقدم بوصفها …»), or right after it («5% لم تعد سارية»);
    - clauses break at punctuation and at «لكن / غير أن / بل / أما»;
    - deontic and affirmative «لا» (لا يجوز، لا يحق، لا شك، لا بد) is not treated as negation.
 
-   `sentence_unless` excuses a contractual-term cue within the same sentence. In the trap definitions, negation words were moved out of the old nearby-word excuse lists, bare «كان/كانت» was dropped as a "this was the old law" cue, and dev paraphrases were added. Before and after definitions are both in `trap_specs.json`.
+   `sentence_unless` excuses a contractual-term cue within the same sentence. In the trap definitions, negation words were moved out of the old nearby-word excuse lists, bare «كان/كانت» was dropped as a "this was the old law" cue, and dev paraphrases were added. Before and after definitions are both in `trap_specs.json`. The measured improvement is attributable to this combined revision, not to negation handling alone. An ablation is needed to isolate the contributions of checker logic and trap-definition changes.
 4. **Held-out scored once.**
 
 ## Effect on the historical benchmark (private corpus)
